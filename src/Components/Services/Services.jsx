@@ -57,7 +57,7 @@ const Services = () => {
                   <a href="">MONEY BACK GUARANTEE</a>
                 </h4>
                 <p className="font-poppins font-normal text-sm text-black leading-[21px]">
-                  <a href="">We reurn money within 30 days</a>
+                  <a href="">We return money within 30 days</a>
                 </p>
               </div>
             </div>
