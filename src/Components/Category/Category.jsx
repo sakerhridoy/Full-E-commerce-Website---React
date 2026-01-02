@@ -1,83 +1,96 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { CiMobile4 } from 'react-icons/ci';
 import { HiOutlineComputerDesktop } from 'react-icons/hi2';
 import { TbDeviceWatchStats } from 'react-icons/tb';
-import { PiCameraThin } from 'react-icons/pi';
-import { PiHeadphones } from 'react-icons/pi';
+import { PiCameraThin, PiHeadphones } from 'react-icons/pi';
 import { LuGamepad } from 'react-icons/lu';
-import { GoArrowLeft } from 'react-icons/go';
-import { GoArrowRight } from 'react-icons/go';
+import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 const Category = () => {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+
+  const categoryItems = [
+    { id: 1, icon: CiMobile4, name: 'Phones' },
+    { id: 2, icon: HiOutlineComputerDesktop, name: 'Computers' },
+    { id: 3, icon: TbDeviceWatchStats, name: 'SmartWatch' },
+    { id: 4, icon: PiCameraThin, name: 'Camera' },
+    { id: 5, icon: PiHeadphones, name: 'HeadPhones' },
+    { id: 6, icon: LuGamepad, name: 'Gaming' },
+    { id: 7, icon: CiMobile4, name: 'Phones' },
+    { id: 8, icon: HiOutlineComputerDesktop, name: 'Computers' },
+  ];
+
   return (
-    <>
-      <section>
-        <div className="container">
-          <div className="section-title border-t border-[rgba(0,0,0,0.3)]">
-            <div className="section-title mb-[31px] pt-20">
-              <div className="mb-[13px] relative after:absolute after:content-[''] after:w-5 after:h-full after:bg-[#DB4444] after:left-0 after:top-0 after:rounded-sm ps-9">
-                <h4 className="font-poppins font-semibold text-base text-[#DB4444]">
-                  Categories
-                </h4>
-              </div>
-              <div className="flex justify-between items-center gap-[470px]">
-                <div className="flex gap-[87px] items-center">
-                  <h2 className="font-inter font-semibold text-4xl text-black leading-12 tracking-[4%]">
-                    Browse By Category
-                  </h2>
-                </div>
-                <div className="flex gap-2 justify-end">
-                  <div className="bg-[#F5F5F5] p-4 rounded-full text-center cursor-pointer">
-                    <GoArrowLeft className="text-base text-black" />
-                  </div>
-                  <div className="bg-[#F5F5F5] p-4 rounded-full text-center cursor-pointer">
-                    <GoArrowRight className="text-base text-black" />
-                  </div>
-                </div>
-              </div>
+    <section>
+      <div className="container">
+        <div className="section-title border-t border-[rgba(0,0,0,0.3)]">
+          <div className="section-title mb-[31px] pt-20">
+            <div className="mb-[13px] relative after:absolute after:content-[''] after:w-5 after:h-full after:bg-[#DB4444] after:left-0 after:top-0 after:rounded-sm ps-9">
+              <h4 className="font-poppins font-semibold text-base text-[#DB4444] leading-10">
+                Categories
+              </h4>
             </div>
-            <div className="pt-[60px] grid grid-cols-6 gap-[30px] pb-[130px]">
-              <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] hover:cursor-pointer transition-all duration-300 ease-in-out">
-                <CiMobile4 className="text-center text-black text-2xl mx-auto font-bold w-14 h-14 group-hover:text-white transition-colors duration-300" />
-                <h3 className="font-poppins font-normal text-base text-black leading-6 pt-[22px] group-hover:text-white transition-colors duration-300">
-                  Phones
-                </h3>
-              </div>
-              <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] hover:cursor-pointer transition-all duration-300 ease-in-out">
-                <HiOutlineComputerDesktop className="text-center text-black text-2xl mx-auto font-bold w-14 h-14 group-hover:text-white transition-colors duration-300" />
-                <h3 className="font-poppins font-normal text-base text-black leading-6 pt-[22px] group-hover:text-white transition-colors duration-300">
-                  Computers
-                </h3>
-              </div>
-              <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] hover:cursor-pointer transition-all duration-300 ease-in-out">
-                <TbDeviceWatchStats className="text-center text-black text-2xl mx-auto font-bold w-14 h-14 group-hover:text-white transition-colors duration-300" />
-                <h3 className="font-poppins font-normal text-base text-black leading-6 pt-[22px] group-hover:text-white transition-colors duration-300">
-                  SmartWatch
-                </h3>
-              </div>
-              <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] hover:cursor-pointer transition-all duration-300 ease-in-out">
-                <PiCameraThin className="text-center text-black text-2xl mx-auto font-bold w-14 h-14 group-hover:text-white transition-colors duration-300" />
-                <h3 className="font-poppins font-normal text-base text-black leading-6 pt-[22px] group-hover:text-white transition-colors duration-300">
-                  Camera
-                </h3>
-              </div>
-              <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] hover:cursor-pointer transition-all duration-300 ease-in-out">
-                <PiHeadphones className="text-center text-black text-2xl mx-auto font-bold w-14 h-14 group-hover:text-white transition-colors duration-300" />
-                <h3 className="font-poppins font-normal text-base text-black leading-6 pt-[22px] group-hover:text-white transition-colors duration-300">
-                  HeadPhones
-                </h3>
-              </div>
-              <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] hover:cursor-pointer transition-all duration-300 ease-in-out">
-                <LuGamepad className="text-center text-black text-2xl mx-auto font-bold w-14 h-14 group-hover:text-white transition-colors duration-300" />
-                <h3 className="font-poppins font-normal text-base text-black leading-6 pt-[22px] group-hover:text-white transition-colors duration-300">
-                  Gaming
-                </h3>
+
+            <div className="flex justify-between items-center">
+              <h2 className="font-inter font-semibold text-4xl text-black tracking-[4%]">
+                Browse By Category
+              </h2>
+
+              {/* Buttons */}
+              <div className="flex gap-2">
+                <div
+                  ref={prevRef}
+                  className="bg-[#F5F5F5] hover:bg-[rgba(174,171,171,0.5)] duration-300 p-4 rounded-full cursor-pointer"
+                >
+                  <GoArrowLeft className="text-black" />
+                </div>
+
+                <div
+                  ref={nextRef}
+                  className="bg-[#F5F5F5] hover:bg-[rgba(174,171,171,0.5)] duration-300 p-4 rounded-full cursor-pointer"
+                >
+                  <GoArrowRight className="text-black" />
+                </div>
               </div>
             </div>
           </div>
+
+          {/* SLIDER START */}
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            slidesPerView={6}
+            spaceBetween={30}
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
+            onInit={swiper => {
+              swiper.params.navigation.prevEl = prevRef.current;
+              swiper.params.navigation.nextEl = nextRef.current;
+              swiper.navigation.init();
+              swiper.navigation.update();
+            }}
+            className="pb-[130px] pt-[60px]"
+          >
+            {categoryItems.map(item => (
+              <SwiperSlide key={item.id}>
+                <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] cursor-pointer transition-all duration-300">
+                  <item.icon className="text-black text-3xl mx-auto w-14 h-14 group-hover:text-white transition-colors duration-300" />
+                  <h3 className="font-poppins text-base text-black pt-[22px] group-hover:text-white transition-colors duration-300">
+                    {item.name}
+                  </h3>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {/* SLIDER END */}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

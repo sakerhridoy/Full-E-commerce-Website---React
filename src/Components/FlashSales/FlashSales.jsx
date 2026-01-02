@@ -1,297 +1,261 @@
-import React from 'react'
-import nwArrival from '../../assets/images/nwArrival.png'
-import { FaStar } from 'react-icons/fa6';
-import { GoArrowLeft } from 'react-icons/go';
-import { GoArrowRight } from 'react-icons/go';
-import { FaRegHeart } from 'react-icons/fa';
+import React from 'react';
+import fSales1 from '../../assets/images/fSales1.png';
+import fSales2 from '../../assets/images/fSales2.png';
+import fSales3 from '../../assets/images/fSales3.png';
+import fSales4 from '../../assets/images/fSales4.png';
+
+import { FaStar, FaRegHeart } from 'react-icons/fa6';
+import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { IoEyeOutline } from 'react-icons/io5';
+
 import { useCountdown } from '../../Context/Provider/CountDownContextProvider';
 
+// Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 const FlashSales = () => {
-  const { seconds, minutes, hours, days } = useCountdown(); 
+  const { seconds, minutes, hours, days } = useCountdown();
+
+  const flashItems = [
+    {
+      id: 1,
+      img: fSales1,
+      dis: 40,
+      heartIcn: FaRegHeart,
+      eyeIcn: IoEyeOutline,
+      cart: 'Add To Cart',
+      name: 'HAVIT HV-G92 Gamepad',
+      dPrice: 120,
+      mPrice: 160,
+      ratingStar: FaStar,
+      rating: 88,
+    },
+    {
+      id: 2,
+      img: fSales2,
+      dis: 35,
+      heartIcn: FaRegHeart,
+      eyeIcn: IoEyeOutline,
+      cart: 'Add To Cart',
+      name: 'AK-900 Wired Keyboard',
+      dPrice: 960,
+      mPrice: 1160,
+      ratingStar: FaStar,
+      rating: 75,
+    },
+    {
+      id: 3,
+      img: fSales3,
+      dis: 30,
+      heartIcn: FaRegHeart,
+      eyeIcn: IoEyeOutline,
+      cart: 'Add To Cart',
+      name: 'IPS LCD Gaming Monitor',
+      dPrice: 370,
+      mPrice: 400,
+      ratingStar: FaStar,
+      rating: 99,
+    },
+    {
+      id: 4,
+      img: fSales4,
+      dis: 25,
+      heartIcn: FaRegHeart,
+      eyeIcn: IoEyeOutline,
+      cart: 'Add To Cart',
+      name: 'S-Series Comfort Chair',
+      dPrice: 375,
+      mPrice: 400,
+      ratingStar: FaStar,
+      rating: 99,
+    },
+    {
+      id: 5,
+      img: fSales1,
+      dis: 40,
+      heartIcn: FaRegHeart,
+      eyeIcn: IoEyeOutline,
+      cart: 'Add To Cart',
+      name: 'HAVIT HV-G92 Gamepad',
+      dPrice: 120,
+      mPrice: 160,
+      ratingStar: FaStar,
+      rating: 88,
+    },
+    {
+      id: 6,
+      img: fSales2,
+      dis: 35,
+      heartIcn: FaRegHeart,
+      eyeIcn: IoEyeOutline,
+      cart: 'Add To Cart',
+      name: 'AK-900 Wired Keyboard',
+      dPrice: 960,
+      mPrice: 1160,
+      ratingStar: FaStar,
+      rating: 75,
+    },
+  ];
+
   return (
-    <>
-      <section className="pt-24">
-        <div className="container">
-          <div className="section-title mb-[31px]">
-            <div className="mb-[13px] relative after:absolute after:content-[''] after:w-5 after:h-full after:bg-[#DB4444] after:left-0 after:top-0 after:rounded-sm ps-9">
-              <h4 className="font-poppins font-semibold text-base text-[#DB4444]">
-                Today’s
-              </h4>
-            </div>
-            <div className="flex justify-between items-center gap-[470px]">
-              <div className="flex gap-[87px] items-center">
-                <h2 className="font-inter font-semibold text-4xl text-black leading-12 tracking-[4%]">
-                  Flash Sales
-                </h2>
-                {/* timer component start */}
-                <div className="flex gap-[17px] items-center">
-                  <div className="days">
-                    <h4 className="font-poppins font-medium text-xs text-black leading-[18px] pb-1">
-                      Days
-                    </h4>
-                    <h3 className="font-inter font-bold text-[32px] leading-[30px] text-black">
-                      {days >= 10 ? days : `0${days}`}
-                    </h3>
-                  </div>
-                  <div className="colon">
-                    <span className="text-xl text-[#E07575]">:</span>
-                  </div>
-                  <div className="hours">
-                    <h4 className="font-poppins font-medium text-xs text-black leading-[18px] pb-1">
-                      Hours
-                    </h4>
-                    <h3 className="font-inter font-bold text-[32px] leading-[30px] text-black">
-                      {hours >= 10 ? hours : `0${hours}`}
-                    </h3>
-                  </div>
-                  <div className="colon">
-                    <span className="text-xl text-[#E07575]">:</span>
-                  </div>
-                  <div className="minutes">
-                    <h4 className="font-poppins font-medium text-xs text-black leading-[18px] pb-1">
-                      Minutes
-                    </h4>
-                    <h3 className="font-inter font-bold text-[32px] leading-[30px] text-black">
-                      {minutes >= 10 ? minutes : `0${minutes}`}
-                    </h3>
-                  </div>
-                  <div className="colon">
-                    <span className="text-xl text-[#E07575]">:</span>
-                  </div>
-                  <div className="seconds">
-                    <h4 className="font-poppins font-medium text-xs text-black leading-[18px] pb-1">
-                      Seconds
-                    </h4>
-                    <h3 className="font-inter font-bold text-[32px] leading-[30px] text-black">
-                      {seconds >= 10 ? seconds : `0${seconds}`}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-2 justify-end">
-                <div className="bg-[#F5F5F5] p-4 rounded-full text-center cursor-pointer">
-                  <GoArrowLeft className="text-base text-black" />
-                </div>
-                <div className="bg-[#F5F5F5] p-4 rounded-full text-center cursor-pointer">
-                  <GoArrowRight className="text-base text-black" />
-                </div>
-              </div>
-            </div>
+    <section className="pt-24">
+      <div className="container">
+        {/* Section Header */}
+        <div className="section-title mb-[31px]">
+          <div className="mb-[13px] relative after:absolute after:content-[''] after:w-5 after:h-full after:bg-[#DB4444] after:left-0 after:top-0 after:rounded-sm ps-9">
+            <h4 className="font-poppins font-semibold text-base text-[#DB4444] leading-10">
+              Today’s
+            </h4>
           </div>
-          <div className="grid grid-cols-4 gap-[30px] pb-[118px]">
-            <div className="item group">
-              <div className="bg-[#F5F5F5] py-[35px] rounded-sm relative overflow-hidden">
-                <img
-                  className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
-                  src={nwArrival}
-                  alt=""
-                />
-                <div className="discount-badge absolute top-3 left-3 bg-[#DB4444] py-1 px-3 rounded-sm">
-                  <p className="font-poppins font-normal text-xs text-[#fafafa] leading-[18px]">
-                    -40%
-                  </p>
+
+          <div className="flex justify-between items-center gap-[470px]">
+            <div className="flex gap-[87px] items-center">
+              <h2 className="font-inter font-semibold text-4xl text-black leading-12 tracking-[4%]">
+                Flash Sales
+              </h2>
+
+              {/* Timer */}
+              <div className="flex gap-[17px] items-center">
+                <div>
+                  <h4 className="text-xs pb-1">Days</h4>
+                  <h3 className="text-[32px] font-bold">
+                    {days >= 10 ? days : `0${days}`}
+                  </h3>
                 </div>
-                <div className="discount-badge absolute top-3 right-3 px-3">
-                  <div className="bg-white p-[5px] rounded-full text-center cursor-pointer mb-2">
-                    <FaRegHeart className="text-base text-black" />
-                  </div>
-                  <div className="bg-white p-[5px] rounded-full text-center cursor-pointer">
-                    <IoEyeOutline className="text-base text-black" />
-                  </div>
+                <span className="text-xl text-[#E07575]">:</span>
+
+                <div>
+                  <h4 className="text-xs pb-1">Hours</h4>
+                  <h3 className="text-[32px] font-bold">
+                    {hours >= 10 ? hours : `0${hours}`}
+                  </h3>
                 </div>
-                <div
-                  className="py-2 bg-black text-center rounded-b-sm absolute -bottom-[26px] left-0 w-full cursor-pointer opacity-0 group-hover:opacity-100 
-                    transition-all duration-300 
-                    group-hover:bottom-0 ease-in-out"
-                >
-                  <p className="font-poppins font-medium text-base text-white leading-6">
-                    <a href="">Add To Cart</a>
-                  </p>
+                <span className="text-xl text-[#E07575]">:</span>
+
+                <div>
+                  <h4 className="text-xs pb-1">Minutes</h4>
+                  <h3 className="text-[32px] font-bold">
+                    {minutes >= 10 ? minutes : `0${minutes}`}
+                  </h3>
                 </div>
-              </div>
-              <div className="pt-4">
-                <h3 className="font-poppins font-medium text-base text-black leading-6">
-                  HAVIT HV-G92 Gamepad
-                </h3>
-                <p className="py-2 font-poppins font-medium text-base leading-6 flex items-center gap-3">
-                  <span className="text-[#DB4444]">$120</span>
-                  <del className="text-[rgba(0,0,0,0.5)]">$160</del>
-                </p>
-                <div className="flex items-center gap-1">
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <span className="font-poppins font-semibold text-sm text-[rgba(0,0,0,0.5)] ps-1">
-                    (88)
-                  </span>
+                <span className="text-xl text-[#E07575]">:</span>
+
+                <div>
+                  <h4 className="text-xs pb-1">Seconds</h4>
+                  <h3 className="text-[32px] font-bold">
+                    {seconds >= 10 ? seconds : `0${seconds}`}
+                  </h3>
                 </div>
               </div>
             </div>
-            <div className="item group">
-              <div className="bg-[#F5F5F5] py-[35px] rounded-sm relative overflow-hidden">
-                <img
-                  className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
-                  src={nwArrival}
-                  alt=""
-                />
-                <div className="discount-badge absolute top-3 left-3 bg-[#DB4444] py-1 px-3 rounded-sm">
-                  <p className="font-poppins font-normal text-xs text-[#fafafa] leading-[18px]">
-                    -40%
-                  </p>
-                </div>
-                <div className="discount-badge absolute top-3 right-3 px-3">
-                  <div className="bg-white p-[5px] rounded-full text-center cursor-pointer mb-2">
-                    <FaRegHeart className="text-base text-black" />
-                  </div>
-                  <div className="bg-white p-[5px] rounded-full text-center cursor-pointer">
-                    <IoEyeOutline className="text-base text-black" />
-                  </div>
-                </div>
-                <div
-                  className="py-2 bg-black text-center rounded-b-sm absolute -bottom-[26px] left-0 w-full cursor-pointer opacity-0 group-hover:opacity-100 
-                    transition-all duration-300 
-                    group-hover:bottom-0 ease-in-out"
-                >
-                  <p className="font-poppins font-medium text-base text-white leading-6">
-                    <a href="">Add To Cart</a>
-                  </p>
-                </div>
+
+            {/* Slider Buttons */}
+            <div className="flex gap-2">
+              <div className="flash-prev bg-[#F5F5F5] hover:bg-[rgba(174,171,171,0.5)] duration-300 p-4 rounded-full cursor-pointer">
+                <GoArrowLeft className="text-base" />
               </div>
-              <div className="pt-4">
-                <h3 className="font-poppins font-medium text-base text-black leading-6">
-                  HAVIT HV-G92 Gamepad
-                </h3>
-                <p className="py-2 font-poppins font-medium text-base leading-6 flex items-center gap-3">
-                  <span className="text-[#DB4444]">$120</span>
-                  <del className="text-[rgba(0,0,0,0.5)]">$160</del>
-                </p>
-                <div className="flex items-center gap-1">
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <span className="font-poppins font-semibold text-sm text-[rgba(0,0,0,0.5)] ps-1">
-                    (88)
-                  </span>
-                </div>
+              <div className="flash-next bg-[#F5F5F5] hover:bg-[rgba(174,171,171,0.5)] p-4 rounded-full cursor-pointer duration-300">
+                <GoArrowRight className="text-base" />
               </div>
             </div>
-            <div className="item group">
-              <div className="bg-[#F5F5F5] py-[35px] rounded-sm relative overflow-hidden">
-                <img
-                  className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
-                  src={nwArrival}
-                  alt=""
-                />
-                <div className="discount-badge absolute top-3 left-3 bg-[#DB4444] py-1 px-3 rounded-sm">
-                  <p className="font-poppins font-normal text-xs text-[#fafafa] leading-[18px]">
-                    -40%
-                  </p>
-                </div>
-                <div className="discount-badge absolute top-3 right-3 px-3">
-                  <div className="bg-white p-[5px] rounded-full text-center cursor-pointer mb-2">
-                    <FaRegHeart className="text-base text-black" />
-                  </div>
-                  <div className="bg-white p-[5px] rounded-full text-center cursor-pointer">
-                    <IoEyeOutline className="text-base text-black" />
-                  </div>
-                </div>
-                <div
-                  className="py-2 bg-black text-center rounded-b-sm absolute -bottom-[26px] left-0 w-full cursor-pointer opacity-0 group-hover:opacity-100 
-                    transition-all duration-300 
-                    group-hover:bottom-0 ease-in-out"
-                >
-                  <p className="font-poppins font-medium text-base text-white leading-6">
-                    <a href="">Add To Cart</a>
-                  </p>
-                </div>
-              </div>
-              <div className="pt-4">
-                <h3 className="font-poppins font-medium text-base text-black leading-6">
-                  HAVIT HV-G92 Gamepad
-                </h3>
-                <p className="py-2 font-poppins font-medium text-base leading-6 flex items-center gap-3">
-                  <span className="text-[#DB4444]">$120</span>
-                  <del className="text-[rgba(0,0,0,0.5)]">$160</del>
-                </p>
-                <div className="flex items-center gap-1">
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <span className="font-poppins font-semibold text-sm text-[rgba(0,0,0,0.5)] ps-1">
-                    (88)
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="item group">
-              <div className="bg-[#F5F5F5] py-[35px] rounded-sm relative overflow-hidden">
-                <img
-                  className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
-                  src={nwArrival}
-                  alt=""
-                />
-                <div className="discount-badge absolute top-3 left-3 bg-[#DB4444] py-1 px-3 rounded-sm">
-                  <p className="font-poppins font-normal text-xs text-[#fafafa] leading-[18px]">
-                    -40%
-                  </p>
-                </div>
-                <div className="discount-badge absolute top-3 right-3 px-3">
-                  <div className="bg-white p-[5px] rounded-full text-center cursor-pointer mb-2">
-                    <FaRegHeart className="text-base text-black" />
-                  </div>
-                  <div className="bg-white p-[5px] rounded-full text-center cursor-pointer">
-                    <IoEyeOutline className="text-base text-black" />
-                  </div>
-                </div>
-                <div
-                  className="py-2 bg-black text-center rounded-b-sm absolute -bottom-[26px] left-0 w-full cursor-pointer opacity-0 group-hover:opacity-100 
-                    transition-all duration-300 
-                    group-hover:bottom-0 ease-in-out"
-                >
-                  <p className="font-poppins font-medium text-base text-white leading-6">
-                    <a href="">Add To Cart</a>
-                  </p>
-                </div>
-              </div>
-              <div className="pt-4">
-                <h3 className="font-poppins font-medium text-base text-black leading-6">
-                  HAVIT HV-G92 Gamepad
-                </h3>
-                <p className="py-2 font-poppins font-medium text-base leading-6 flex items-center gap-3">
-                  <span className="text-[#DB4444]">$120</span>
-                  <del className="text-[rgba(0,0,0,0.5)]">$160</del>
-                </p>
-                <div className="flex items-center gap-1">
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <FaStar className="inline text-[#FFAD33] text-lg" />
-                  <span className="font-poppins font-semibold text-sm text-[rgba(0,0,0,0.5)] ps-1">
-                    (88)
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="text-center pb-[102px]">
-            <a
-              href=""
-              className="bg-[#DB4444] text-center py-4 px-12 rounded-sm font-poppins font-medium text-base text-[#fafafa] leading-6"
-            >
-              View All Products
-            </a>
           </div>
         </div>
-      </section>
-    </>
+
+        {/* Swiper Slider */}
+        <div className="pb-[118px]">
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            slidesPerView={4}
+            spaceBetween={30}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            navigation={{
+              nextEl: '.flash-next',
+              prevEl: '.flash-prev',
+            }}
+            loop={true}
+            className="flash-swiper"
+          >
+            {flashItems.map(fItems => (
+              <SwiperSlide key={fItems.id}>
+                <div className="item group">
+                  <div className="bg-[#F5F5F5] py-[35px] rounded-sm relative overflow-hidden">
+                    <img
+                      className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
+                      src={fItems.img}
+                      alt=""
+                    />
+
+                    {/* Discount Badge */}
+                    <div className="absolute top-3 left-3 bg-[#DB4444] py-1 px-3 rounded-sm">
+                      <p className="text-xs text-white">- {fItems.dis}%</p>
+                    </div>
+
+                    {/* Icons */}
+                    <div className="absolute top-3 right-3">
+                      <div className="bg-white p-[5px] rounded-full mb-2 cursor-pointer">
+                        <fItems.heartIcn className="text-base" />
+                      </div>
+                      <div className="bg-white p-[5px] rounded-full cursor-pointer">
+                        <fItems.eyeIcn className="text-base" />
+                      </div>
+                    </div>
+
+                    {/* Add to Cart Hover */}
+                    <div
+                      className="py-2 bg-black text-center rounded-b-sm absolute -bottom-[26px] left-0 w-full opacity-0
+                    group-hover:opacity-100 transition-all duration-300 group-hover:bottom-0"
+                    >
+                      <p className="text-white">
+                        <a href="">{fItems.cart}</a>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Product Details */}
+                  <div className="pt-4">
+                    <h3 className="font-medium text-base">{fItems.name}</h3>
+
+                    <p className="py-2 flex items-center gap-3 text-base font-medium">
+                      <span className="text-[#DB4444]">${fItems.dPrice}</span>
+                      <del className="text-[rgba(0,0,0,0.5)]">
+                        ${fItems.mPrice}
+                      </del>
+                    </p>
+
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((_, i) => (
+                        <fItems.ratingStar
+                          key={i}
+                          className="text-[#FFAD33] text-lg"
+                        />
+                      ))}
+                      <span className="text-sm text-[rgba(0,0,0,0.5)] ps-1">
+                        ({fItems.rating})
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
+        <div className="text-center pb-[102px]">
+          <a
+            href=""
+            className="bg-[#DB4444] hover:bg-[#b80808] transition-all duration-300 py-4 px-12 rounded-sm text-white font-medium text-base"
+          >
+            View All Products
+          </a>
+        </div>
+      </div>
+    </section>
   );
 };
 

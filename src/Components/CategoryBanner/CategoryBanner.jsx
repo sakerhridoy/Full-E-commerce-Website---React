@@ -61,7 +61,7 @@ const CategoryBanner = () => {
                       <div className="flex gap-2 items-center mb-[65px]">
                         <a
                           href=""
-                          className="bg-[#00FF66] text-center py-4 px-12 rounded-sm font-poppins font-medium text-base text-[#fafafa] leading-6"
+                          className="bg-[#00FF66] hover:bg-[#00ff66de] duration-300 hover:text-white text-center py-4 px-12 rounded-sm font-poppins font-medium text-base text-[#fafafa] leading-6"
                         >
                           Buy Now!
                         </a>

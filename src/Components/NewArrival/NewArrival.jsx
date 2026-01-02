@@ -11,7 +11,7 @@ const NewArrival = () => {
         <div className="container">
           <div className="section-title mb-[60px]">
             <div className="mb-5 relative after:absolute after:content-[''] after:w-5 after:h-full after:bg-[#DB4444] after:left-0 after:top-0 after:rounded-sm ps-9">
-              <h4 className="font-poppins font-semibold text-base text-[#DB4444]">
+              <h4 className="font-poppins font-semibold text-base text-[#DB4444] leading-10">
                 Featured
               </h4>
             </div>
