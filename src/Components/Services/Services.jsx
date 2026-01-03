@@ -4,7 +4,7 @@ import { TfiHeadphoneAlt } from 'react-icons/tfi';
 import { GoShieldCheck } from 'react-icons/go';
 import { HiOutlineArrowSmallUp } from 'react-icons/hi2';
 
-const Services = () => {
+const Services = ({ className = '' }) => {
   // SCROLL TO TOP FUNCTION
   const scrollToTop = () => {
     window.scrollTo({

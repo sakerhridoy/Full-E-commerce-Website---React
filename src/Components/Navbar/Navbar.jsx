@@ -49,7 +49,7 @@ const Navbar = () => {
           <div className="flex justify-between gap-[126px] mt-10">
             <div className="flex gap-38 justify-between items-center">
               <div className="w-[118px]">
-                <img src={logo} alt="logo" className="w-full" />
+                <Link to="/"><img src={logo} alt="logo" className="w-full" /></Link>
               </div>
               <div className="menu">
                 <ul className="flex gap-12">
@@ -60,7 +60,7 @@ const Navbar = () => {
                     <Link to="/contact">Contact</Link>
                   </li>
                   <li>
-                    <a href="">About</a>
+                    <Link to="/about">About</Link>
                   </li>
                   <li>
                     <Link to="/signup">Sign Up</Link>

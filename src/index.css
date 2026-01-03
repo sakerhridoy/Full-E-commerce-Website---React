@@ -57,6 +57,7 @@ background: linear-gradient(90deg,rgba(5, 5, 5, 1) 53%, rgba(60, 60, 64, 0.96) 7
  .perfume{
  background: radial-gradient(circle,rgba(69, 67, 67, 1) 11%, rgba(37, 37, 38, 1) 86%);
  }
+
 /* @keyframes spin-slow {
   0% {
     transform: rotateY(0deg);
@@ -70,4 +71,24 @@ background: linear-gradient(90deg,rgba(5, 5, 5, 1) 53%, rgba(60, 60, 64, 0.96) 7
   animation: spin-slow 60s linear infinite; 
 }
   */
+
+/* BASE DOT */
+.team-pagination .custom-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #bfbfbf;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+/* ACTIVE DOT (RED CENTER) */
+.team-pagination .swiper-pagination-bullet-active {
+  border: 2px solid #bfbfbf !important;
+  border-color: #bfbfbf!important;
+  background: #db4444!important;
+  box-shadow: 0 0 0 2px rgba(244, 240, 240, 0.25);
+}
+
+
 }

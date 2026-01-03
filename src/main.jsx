@@ -18,6 +18,8 @@ import Cart from './Components/Cart/Cart.jsx';
 import Checkout from './Components/Checkout/Checkout.jsx';
 import MyAccount from './Components/MyAccount/MyAccount.jsx';
 import Contact from './Components/Contact/Contact.jsx';
+import About from './Components/About/About.jsx';
+import ProductDetails from './Components/ProductDetails/ProductDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,8 @@ const router = createBrowserRouter([
       { path: 'checkout', Component: Checkout },
       { path: 'myAccount', Component: MyAccount },
       { path: 'contact', Component: Contact },
+      { path: 'about', Component: About },
+      { path: 'product/:id', Component: ProductDetails },
       { path: '*', Component: NotFound },
     ],
   },

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router';
-import { FiPhoneCall, FiMail } from 'react-icons/fi';
+import { FiPhone, FiMail } from 'react-icons/fi';
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -52,7 +52,7 @@ const Contact = () => {
             <div>
               <div className="flex items-center gap-4 mb-6">
                 <span className="w-10 h-10 bg-[#DB4444] text-white rounded-full flex items-center justify-center">
-                  <FiPhoneCall />
+                  <FiPhone />
                 </span>
                 <h4 className="font-medium font-poppins text-base leading-6">
                   Call To Us

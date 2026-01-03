@@ -114,7 +114,9 @@ const Shop = () => {
           {/* ================= PRODUCTS ================= */}
           <div className="w-[80%]">
             <div className="flex justify-end items-center mb-[30px]">
-              <span className="font-poppins text-base mr-3 font-normal leading-6 text-black">Show :</span>
+              <span className="font-poppins text-base mr-3 font-normal leading-6 text-black">
+                Show :
+              </span>
               <select className="shadow-sm px-10 py-[2.5px] rounded-[5px] outline-0 appearance-none">
                 <option>6</option>
                 <option>9</option>
@@ -126,11 +128,13 @@ const Shop = () => {
                 <div key={item.id} className="group">
                   {/* IMAGE */}
                   <div className="bg-[#F5F5F5] py-10 relative overflow-hidden">
-                    <img
-                      src={item.img}
-                      alt={item.name}
-                      className="mx-auto w-40"
-                    />
+                    <Link to={`/product/${item.id}`}>
+                      <img
+                        src={item.img}
+                        alt={item.name}
+                        className="mx-auto w-40 cursor-pointer"
+                      />
+                    </Link>
 
                     {/* DISCOUNT */}
                     {item.dis > 0 && (
@@ -164,7 +168,7 @@ const Shop = () => {
 
                   {/* DETAILS */}
                   <div className="pt-4">
-                    <h4 className="font-medium">{item.name}</h4>
+                    <Link to={`/product/${item.id}`} className="font-medium">{item.name}</Link>
 
                     <p className="flex gap-3 py-2">
                       <span className="text-[#DB4444] font-medium">
