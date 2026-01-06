@@ -6,6 +6,8 @@ import bSelling4 from '../../assets/images/bSelling4.png';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { FaRegHeart } from 'react-icons/fa';
 import { IoEyeOutline } from 'react-icons/io5';
+import { useShop } from '../../Context/ShopContext/ShopContext';
+import { Link } from 'react-router';
 
 const BestSelling = () => {
   const bestSellingItems = [
@@ -47,11 +49,12 @@ const BestSelling = () => {
     },
   ];
 
-  // ⭐ FULL STAR + HALF STAR FUNCTION
+  const { addToCart, addToWishlist } = useShop();
+
   const renderStars = rating => {
     const stars = [];
-    const fullStars = Math.floor(rating); // 4 or 5
-    const hasHalfStar = rating % 1 !== 0; // 0.5 hole true
+    const fullStars = Math.floor(rating); 
+    const hasHalfStar = rating % 1 !== 0; 
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(<FaStar key={`full-${i}`} className="text-[#FFAD33]" />);
@@ -96,10 +99,14 @@ const BestSelling = () => {
             {bestSellingItems.map(item => (
               <div key={item.id} className="item">
                 <div className="bg-[#F5F5F5] py-[35px] rounded-sm relative">
-                  <img className="mx-auto w-[172px]" src={item.img} alt="" />
-
+                  <Link to={`/product/${item.id}`}>
+                    <img className="mx-auto w-[172px]" src={item.img} alt="" />
+                  </Link>
                   <div className="discount-badge absolute top-3 right-3 px-3">
-                    <div className="bg-white p-[5px] rounded-full cursor-pointer mb-2">
+                    <div
+                      onClick={() => addToWishlist(item)}
+                      className="bg-white p-[5px] rounded-full cursor-pointer mb-2"
+                    >
                       <FaRegHeart className="text-base text-black" />
                     </div>
 
@@ -109,26 +116,27 @@ const BestSelling = () => {
                   </div>
                 </div>
 
-                <div className="pt-4">
-                  <h3 className="font-poppins font-medium text-base text-black">
-                    {item.name}
-                  </h3>
+                <Link to={`/product/${item.id}`}>
+                  <div className="pt-4">
+                    <h3 className="font-poppins font-medium text-base text-black">
+                      {item.name}
+                    </h3>
 
-                  <p className="py-2 font-poppins font-medium text-base flex items-center gap-3">
-                    <span className="text-[#DB4444]">${item.price}</span>
-                    <del className="text-[rgba(0,0,0,0.5)]">
-                      ${item.oldPrice}
-                    </del>
-                  </p>
+                    <p className="py-2 font-poppins font-medium text-base flex items-center gap-3">
+                      <span className="text-[#DB4444]">${item.price}</span>
+                      <del className="text-[rgba(0,0,0,0.5)]">
+                        ${item.oldPrice}
+                      </del>
+                    </p>
 
-                  {/* ⭐ RATING SECTION */}
-                  <div className="flex items-center gap-1">
-                    {renderStars(item.rating)}
-                    <span className="font-poppins font-semibold text-sm text-[rgba(0,0,0,0.5)] ps-1">
-                      ({item.reviews})
-                    </span>
+                    <div className="flex items-center gap-1">
+                      {renderStars(item.rating)}
+                      <span className="font-poppins font-semibold text-sm text-[rgba(0,0,0,0.5)] ps-1">
+                        ({item.reviews})
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>

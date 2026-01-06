@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CiMobile4 } from 'react-icons/ci';
 import { HiOutlineComputerDesktop } from 'react-icons/hi2';
 import { TbDeviceWatchStats } from 'react-icons/tb';
@@ -11,24 +11,22 @@ import { Navigation, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+import axios from 'axios';
 
 const Category = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  const categoryItems = [
-    { id: 1, icon: CiMobile4, name: 'Phones' },
-    { id: 2, icon: HiOutlineComputerDesktop, name: 'Computers' },
-    { id: 3, icon: TbDeviceWatchStats, name: 'SmartWatch' },
-    { id: 4, icon: PiCameraThin, name: 'Camera' },
-    { id: 5, icon: PiHeadphones, name: 'HeadPhones' },
-    { id: 6, icon: LuGamepad, name: 'Gaming' },
-    { id: 7, icon: CiMobile4, name: 'Phones' },
-    { id: 8, icon: HiOutlineComputerDesktop, name: 'Computers' },
-  ];
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('https://dummyjson.com/products/categories')
+      .then(result => setCategories(result.data));
+  });
 
   return (
-    <section>
+    <section className='pb-[120px]'>
       <div className="container">
         <div className="section-title border-t border-[rgba(0,0,0,0.3)]">
           <div className="section-title mb-[31px] pt-20">
@@ -38,7 +36,7 @@ const Category = () => {
               </h4>
             </div>
 
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center pb-10">
               <h2 className="font-inter font-semibold text-4xl text-black tracking-[4%]">
                 Browse By Category
               </h2>
@@ -76,11 +74,10 @@ const Category = () => {
             }}
             className="pb-[130px] pt-[60px]"
           >
-            {categoryItems.map(item => (
+            {categories.map(item => (
               <SwiperSlide key={item.id}>
                 <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] cursor-pointer transition-all duration-300">
-                  <item.icon className="text-black text-3xl mx-auto w-14 h-14 group-hover:text-white transition-colors duration-300" />
-                  <h3 className="font-poppins text-base text-black pt-[22px] group-hover:text-white transition-colors duration-300">
+                  <h3 className="font-poppins text-base text-black py-[22px] group-hover:text-white transition-colors duration-300">
                     {item.name}
                   </h3>
                 </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import banner from '../../assets/Images/banner.png';
 import iphone15 from '../../assets/Images/iphone15.png';
 import iphone16 from '../../assets/Images/iphone16.png';
@@ -8,6 +8,8 @@ import { IoArrowForward } from 'react-icons/io5';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import { Link } from 'react-router';
+import axios from 'axios';
 
 const Banner = () => {
   const bannerItems = [
@@ -48,6 +50,14 @@ const Banner = () => {
       img: iphone17,
     },
   ];
+  
+  const [categories, setCategories] = useState([])
+  
+  useEffect(() => {
+    axios.get('https://dummyjson.com/products/categories')
+    .then(result => setCategories(result.data))
+  })
+
    const settings = {
      dots: true,
      infinite: true,
@@ -65,14 +75,12 @@ const Banner = () => {
         <div className="container">
           <div className="flex gap-[45px] justify-between">
             <div className="w-[20%] flex flex-col gap-6 pt-10 border-r-[0.5px] border-[rgba(0,0,0,0.25)] banner_menu">
-              <a href="">Woman’s Fashion</a>
-              <a href="">Men’s Fashion</a>
-              <a href="">Home & Lifestyle</a>
-              <a href="">Medicine</a>
-              <a href="">Sports & Outdoor</a>
-              <a href="">Baby’s & Toys</a>
-              <a href="">Groceries & Pets</a>
-              <a href="">Health & Beauty</a>
+              {
+                categories.slice(0,8).map(cate => (
+                  
+                  <Link href="">{cate.name}</Link>
+                ))
+              }
             </div>
             <div className="w-[80%] pt-10 ">
               <div className="slider-container">
@@ -98,13 +106,13 @@ const Banner = () => {
                               {bItems.voucher}
                             </h2>
 
-                            <div className="flex gap-2 items-center">
+                            <Link to='/shop' className="flex gap-2 items-center">
                               <button className="bg-transparent font-poppins text-base text-[#fafafa] pb-1 border-b border-[#fafafa]">
                                 {bItems.btn}
                               </button>
 
                               <bItems.arrow className="text-[#fafafa] text-xl" />
-                            </div>
+                            </Link>
                           </div>
                         </div>
 

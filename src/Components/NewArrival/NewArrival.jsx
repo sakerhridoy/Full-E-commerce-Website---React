@@ -3,6 +3,7 @@ import newArrival1 from '../../assets/Images/newArrrivals1.png'
 import newArrival2 from '../../assets/Images/newArrrivals2.png'
 import newArrival3 from '../../assets/Images/newArrrivals3.png'
 import newArrival4 from '../../assets/Images/newArrrivals4.png'
+import { Link } from 'react-router'
 
 const NewArrival = () => {
   return (
@@ -31,12 +32,12 @@ const NewArrival = () => {
                 <p className="font-poppins font-normal text-sm text-[#fafafa] leading-[21px] py-4">
                   Black and White version of the PS5 coming out on sale.
                 </p>
-                <a
-                  href=""
+                <Link
+                  to="/shop"
                   className="font-poppins font-medium text-base text-white leading-6 border-b border-white/50"
                 >
                   Shop Now
-                </a>
+                </Link>
               </div>
             </div>
             <div className="w-1/2 flex flex-col gap-8">
@@ -53,12 +54,12 @@ const NewArrival = () => {
                   <p className="font-poppins font-normal text-sm text-[#fafafa] leading-[21px] py-4">
                     Featured woman collections that give you another vibe.
                   </p>
-                  <a
-                    href=""
+                  <Link
+                    to="/shop"
                     className="font-poppins font-medium text-base text-white leading-6 border-b border-white/50"
                   >
                     Shop Now
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="h-1/2 flex gap-[30px]">
@@ -71,12 +72,12 @@ const NewArrival = () => {
                     <p className="font-poppins font-normal text-sm text-[#fafafa] leading-[21px] py-2">
                       Amazon wireless speakers
                     </p>
-                    <a
-                      href=""
+                    <Link
+                      to="/shop"
                       className="font-poppins font-medium text-base text-white leading-6 border-b border-white/50"
                     >
                       Shop Now
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="w-1/2 perfume py-[31px] px-[30px] relative rounded-sm">
@@ -88,12 +89,12 @@ const NewArrival = () => {
                     <p className="font-poppins font-normal text-sm text-[#fafafa] leading-[21px] py-2">
                       GUCCI INTENSE OUD EDP
                     </p>
-                    <a
-                      href=""
+                    <Link
+                      to="/shop"
                       className="font-poppins font-medium text-base text-white leading-6 border-b border-white/50"
                     >
                       Shop Now
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

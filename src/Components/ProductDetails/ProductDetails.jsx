@@ -179,8 +179,6 @@ const ProductDetails = () => {
             <p className="text-black font-poppins font-normal mb-2 border-b pb-2">
               {product.details}
             </p>
-
-            {/* Colours */}
             <div className="flex items-center gap-6 mb-4">
               <p className="text-black font-inter text-xl leading-5 font-normal">
                 Colours:

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import explore from '../../assets/images/explore.png';
 import explore1 from '../../assets/images/explore1.png';
 import explore3 from '../../assets/images/explore3.png';
@@ -13,11 +13,12 @@ import { Grid, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
+import { Link } from 'react-router';
+import { useShop } from '../../Context/ShopContext/ShopContext';
 
 const Explore = () => {
   const swiperRef = useRef(null);
 
-  // ⭐ DYNAMIC STAR RENDER FUNCTION
   const renderStars = count => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -34,6 +35,8 @@ const Explore = () => {
     }
     return stars;
   };
+
+  const { addToCart, addToWishlist } = useShop();
 
   const exploreItems = [
     {
@@ -133,7 +136,9 @@ const Explore = () => {
       rating: 145,
     },
     
-  ];
+  ]
+
+  const [visibleCount, setVisibleCount] = useState(4);
 
   return (
     <section className="pb-[168px]">
@@ -180,19 +185,24 @@ const Explore = () => {
           slidesPerGroup={1}
           onSwiper={swiper => (swiperRef.current = swiper)}
         >
-          {exploreItems.map(expItem => (
+          {exploreItems.slice(0, visibleCount).map(expItem => (
             <SwiperSlide key={expItem.id}>
               <div className="item group">
                 <div className="bg-[#F5F5F5] py-[35px] rounded-sm relative overflow-hidden">
-                  <img
-                    className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
-                    src={expItem.img}
-                    alt=""
-                  />
+                  <Link to={`/product/${expItem.id}`}>
+                    <img
+                      className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
+                      src={expItem.img}
+                      alt=""
+                    />
+                  </Link>
 
                   {/* HEART + EYE ICONS */}
                   <div className="absolute top-3 right-3 px-3">
-                    <div className="bg-white p-[5px] rounded-full cursor-pointer mb-2">
+                    <div
+                      onClick={() => addToWishlist(expItem)}
+                      className="bg-white p-[5px] rounded-full cursor-pointer mb-2"
+                    >
                       <FaRegHeart className="text-base text-black" />
                     </div>
                     <div className="bg-white p-[5px] rounded-full cursor-pointer">
@@ -201,46 +211,52 @@ const Explore = () => {
                   </div>
 
                   {/* ADD TO CART */}
-                  <div className="py-2 bg-black text-center absolute -bottom-[26px] left-0 w-full opacity-0 group-hover:opacity-100 group-hover:bottom-0 transition-all duration-300">
-                    <p className="font-poppins text-base text-white">
-                      Add To Cart
-                    </p>
+                  <div
+                    onClick={() => addToCart(expItem)}
+                    className="absolute left-0 bottom-[-45px] w-full bg-black text-white text-center py-2
+                    cursor-pointer opacity-0 group-hover:bottom-0 group-hover:opacity-100 transition-all"
+                  >
+                    Add To Cart
                   </div>
                 </div>
 
                 {/* TEXT CONTENT */}
-                <div className="pt-4">
-                  <h3 className="font-poppins text-base text-black">
-                    {expItem.title}
-                  </h3>
+                <Link to={`/product/${expItem.id}`}>
+                  <div className="pt-4">
+                    <h3 className="font-poppins text-base text-black">
+                      {expItem.title}
+                    </h3>
 
-                  <div className="flex items-center gap-1 py-2">
-                    <p className="text-[#DB4444] font-poppins text-base">
-                      ${expItem.price}
-                    </p>
+                    <div className="flex items-center gap-1 py-2">
+                      <p className="text-[#DB4444] font-poppins text-base">
+                        ${expItem.price}
+                      </p>
 
-                    {/* DYNAMIC STARS HERE */}
-                    {renderStars(expItem.ratingStars)}
+                      {/* DYNAMIC STARS HERE */}
+                      {renderStars(expItem.ratingStars)}
 
-                    <span className="font-poppins text-sm text-[rgba(0,0,0,0.5)] ps-1">
-                      ({expItem.rating})
-                    </span>
+                      <span className="font-poppins text-sm text-[rgba(0,0,0,0.5)] ps-1">
+                        ({expItem.rating})
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
 
         {/* VIEW ALL */}
-        <div className="text-center mt-16">
-          <a
-            href="#"
-            className="bg-[#DB4444] hover:bg-[#b80808] transition-all duration-300 py-4 px-12 rounded-sm font-poppins text-base text-white"
-          >
-            View All Products
-          </a>
-        </div>
+        {visibleCount < exploreItems.length && (
+          <div className="text-center mt-16">
+            <a
+              onClick={() => setVisibleCount(visibleCount + 4)}
+              className="bg-[#DB4444] hover:bg-[#b80808] transition-all duration-300 py-4 px-12 rounded-sm font-poppins text-base text-white"
+            >
+              View More Products
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

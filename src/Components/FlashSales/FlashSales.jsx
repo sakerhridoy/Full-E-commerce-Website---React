@@ -10,11 +10,12 @@ import { IoEyeOutline } from 'react-icons/io5';
 
 import { useCountdown } from '../../Context/Provider/CountDownContextProvider';
 
-// Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { Link } from 'react-router';
+import { useShop } from '../../Context/ShopContext/ShopContext';
 
 const FlashSales = () => {
   const { seconds, minutes, hours, days } = useCountdown();
@@ -99,11 +100,10 @@ const FlashSales = () => {
       rating: 75,
     },
   ];
-
+const { addToCart, addToWishlist } = useShop();
   return (
     <section className="pt-24">
       <div className="container">
-        {/* Section Header */}
         <div className="section-title mb-[31px]">
           <div className="mb-[13px] relative after:absolute after:content-[''] after:w-5 after:h-full after:bg-[#DB4444] after:left-0 after:top-0 after:rounded-sm ps-9">
             <h4 className="font-poppins font-semibold text-base text-[#DB4444] leading-10">
@@ -117,7 +117,6 @@ const FlashSales = () => {
                 Flash Sales
               </h2>
 
-              {/* Timer */}
               <div className="flex gap-[17px] items-center">
                 <div>
                   <h4 className="text-xs pb-1">Days</h4>
@@ -152,7 +151,6 @@ const FlashSales = () => {
               </div>
             </div>
 
-            {/* Slider Buttons */}
             <div className="flex gap-2">
               <div className="flash-prev bg-[#F5F5F5] hover:bg-[rgba(174,171,171,0.5)] duration-300 p-4 rounded-full cursor-pointer">
                 <GoArrowLeft className="text-base" />
@@ -164,7 +162,6 @@ const FlashSales = () => {
           </div>
         </div>
 
-        {/* Swiper Slider */}
         <div className="pb-[118px]">
           <Swiper
             modules={[Navigation, Autoplay]}
@@ -185,28 +182,31 @@ const FlashSales = () => {
               <SwiperSlide key={fItems.id}>
                 <div className="item group">
                   <div className="bg-[#F5F5F5] py-[35px] rounded-sm relative overflow-hidden">
-                    <img
-                      className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
-                      src={fItems.img}
-                      alt=""
-                    />
+                    <Link to={`/product/${fItems.id}`}>
+                      <img
+                        className="mx-auto w-[172px] transition-transform duration-300 group-hover:scale-90"
+                        src={fItems.img}
+                        alt=""
+                      />
+                    </Link>
 
                     {/* Discount Badge */}
                     <div className="absolute top-3 left-3 bg-[#DB4444] py-1 px-3 rounded-sm">
                       <p className="text-xs text-white">- {fItems.dis}%</p>
                     </div>
 
-                    {/* Icons */}
                     <div className="absolute top-3 right-3">
-                      <div className="bg-white p-[5px] rounded-full mb-2 cursor-pointer">
+                      <div
+                        onClick={() => addToWishlist(fItems)}
+                        className="bg-white p-[5px] rounded-full mb-2 cursor-pointer"
+                      >
                         <fItems.heartIcn className="text-base" />
                       </div>
-                      <div className="bg-white p-[5px] rounded-full cursor-pointer">
-                        <fItems.eyeIcn className="text-base" />
-                      </div>
+                        <div className="bg-white p-[5px] rounded-full cursor-pointer">
+                          <fItems.eyeIcn className="text-base" />
+                        </div>
                     </div>
 
-                    {/* Add to Cart Hover */}
                     <div
                       className="py-2 bg-black text-center rounded-b-sm absolute -bottom-[26px] left-0 w-full opacity-0
                     group-hover:opacity-100 transition-all duration-300 group-hover:bottom-0"
@@ -217,29 +217,30 @@ const FlashSales = () => {
                     </div>
                   </div>
 
-                  {/* Product Details */}
-                  <div className="pt-4">
-                    <h3 className="font-medium text-base">{fItems.name}</h3>
+                  <Link to={`/product/${fItems.id}`}>
+                    <div className="pt-4">
+                      <h3 className="font-medium text-base">{fItems.name}</h3>
 
-                    <p className="py-2 flex items-center gap-3 text-base font-medium">
-                      <span className="text-[#DB4444]">${fItems.dPrice}</span>
-                      <del className="text-[rgba(0,0,0,0.5)]">
-                        ${fItems.mPrice}
-                      </del>
-                    </p>
+                      <p className="py-2 flex items-center gap-3 text-base font-medium">
+                        <span className="text-[#DB4444]">${fItems.dPrice}</span>
+                        <del className="text-[rgba(0,0,0,0.5)]">
+                          ${fItems.mPrice}
+                        </del>
+                      </p>
 
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((_, i) => (
-                        <fItems.ratingStar
-                          key={i}
-                          className="text-[#FFAD33] text-lg"
-                        />
-                      ))}
-                      <span className="text-sm text-[rgba(0,0,0,0.5)] ps-1">
-                        ({fItems.rating})
-                      </span>
+                      <div className="flex items-center gap-1">
+                        {[1, 2, 3, 4, 5].map((_, i) => (
+                          <fItems.ratingStar
+                            key={i}
+                            className="text-[#FFAD33] text-lg"
+                          />
+                        ))}
+                        <span className="text-sm text-[rgba(0,0,0,0.5)] ps-1">
+                          ({fItems.rating})
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               </SwiperSlide>
             ))}
