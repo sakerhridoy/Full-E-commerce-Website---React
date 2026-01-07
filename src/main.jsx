@@ -5,8 +5,7 @@ import App from './App.jsx';
 import CountdownContextProvider from './Context/Provider/CountDownContextProvider.jsx';
 import { ShopProvider } from './Context/ShopContext/ShopContext';
 
-import { createBrowserRouter } from 'react-router';
-import { RouterProvider } from 'react-router/dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import MainRoute from './Components/MainRoute/MainRoute.jsx';
 import Shop from './Components/Shop/Shop.jsx';
@@ -20,6 +19,7 @@ import MyAccount from './Components/MyAccount/MyAccount.jsx';
 import Contact from './Components/Contact/Contact.jsx';
 import About from './Components/About/About.jsx';
 import ProductDetails from './Components/ProductDetails/ProductDetails.jsx';
+import CategoryProduct from './Components/CategoryProduct/CategoryProduct.jsx';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +37,7 @@ const router = createBrowserRouter([
       { path: 'contact', Component: Contact },
       { path: 'about', Component: About },
       { path: 'product/:id', Component: ProductDetails },
+      { path: 'products/category/:slug', Component: CategoryProduct },
       { path: '*', Component: NotFound },
     ],
   },

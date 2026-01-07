@@ -7,7 +7,7 @@ import nagad from '../../assets/Images/Nagad.png'
 
 const Checkout = () => {
   const { cart } = useShop();
-  const shippingCost = 0; // Free shipping as in screenshot
+  const shippingCost = 0; 
   const subtotal = cart.reduce(
     (acc, item) => acc + item.dPrice * item.quantity,
     0
@@ -24,7 +24,7 @@ const Checkout = () => {
     phone: '',
     email: '',
     saveInfo: false,
-    paymentMethod: 'cod', // cod = Cash on Delivery, bank = Bank
+    paymentMethod: 'cod',
     coupon: '',
   });
 
@@ -57,7 +57,6 @@ const Checkout = () => {
     e.preventDefault();
     if (!validate()) return;
     alert('Order placed successfully!');
-    // Here you can call API or process the order
   };
 
   return (

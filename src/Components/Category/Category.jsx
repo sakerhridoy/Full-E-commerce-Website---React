@@ -1,9 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { CiMobile4 } from 'react-icons/ci';
-import { HiOutlineComputerDesktop } from 'react-icons/hi2';
-import { TbDeviceWatchStats } from 'react-icons/tb';
-import { PiCameraThin, PiHeadphones } from 'react-icons/pi';
-import { LuGamepad } from 'react-icons/lu';
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,6 +7,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import axios from 'axios';
+import { Link } from 'react-router';
 
 const Category = () => {
   const prevRef = useRef(null);
@@ -26,7 +22,7 @@ const Category = () => {
   });
 
   return (
-    <section className='pb-[120px]'>
+    <section className="pb-[120px]">
       <div className="container">
         <div className="section-title border-t border-[rgba(0,0,0,0.3)]">
           <div className="section-title mb-[31px] pt-20">
@@ -76,15 +72,16 @@ const Category = () => {
           >
             {categories.map(item => (
               <SwiperSlide key={item.id}>
-                <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] cursor-pointer transition-all duration-300">
-                  <h3 className="font-poppins text-base text-black py-[22px] group-hover:text-white transition-colors duration-300">
-                    {item.name}
-                  </h3>
-                </div>
+                <Link to={`/products/category/${item.slug}`}>
+                  <div className="pt-[25px] pb-6 border border-[rgba(0,0,0,0.1)] rounded-sm text-center group hover:bg-[#DB4444] cursor-pointer transition-all duration-300">
+                    <h3 className="font-poppins text-base text-black py-[22px] group-hover:text-white transition-colors duration-300">
+                      {item.name}
+                    </h3>
+                  </div>
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>
-          {/* SLIDER END */}
         </div>
       </div>
     </section>

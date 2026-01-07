@@ -19,6 +19,7 @@ import { useShop } from '../../Context/ShopContext/ShopContext';
 
 const FlashSales = () => {
   const { seconds, minutes, hours, days } = useCountdown();
+    const { addToCart, addToWishlist } = useShop();
 
   const flashItems = [
     {
@@ -100,7 +101,6 @@ const FlashSales = () => {
       rating: 75,
     },
   ];
-const { addToCart, addToWishlist } = useShop();
   return (
     <section className="pt-24">
       <div className="container">
@@ -202,17 +202,22 @@ const { addToCart, addToWishlist } = useShop();
                       >
                         <fItems.heartIcn className="text-base" />
                       </div>
-                        <div className="bg-white p-[5px] rounded-full cursor-pointer">
-                          <fItems.eyeIcn className="text-base" />
-                        </div>
+                      <div className="bg-white p-[5px] rounded-full cursor-pointer">
+                        <fItems.eyeIcn className="text-base" />
+                      </div>
                     </div>
 
                     <div
+                      onClick={e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        addToCart(fItems);
+                      }}
                       className="py-2 bg-black text-center rounded-b-sm absolute -bottom-[26px] left-0 w-full opacity-0
                     group-hover:opacity-100 transition-all duration-300 group-hover:bottom-0"
                     >
                       <p className="text-white">
-                        <a href="">{fItems.cart}</a>
+                        <a>{fItems.cart}</a>
                       </p>
                     </div>
                   </div>

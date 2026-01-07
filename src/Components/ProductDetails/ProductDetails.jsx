@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router'; 
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { FaStar, FaRegHeart } from 'react-icons/fa';
 import { FiMinus } from 'react-icons/fi';
 import { FaPlus } from 'react-icons/fa6';
@@ -7,85 +7,118 @@ import { useShop } from '../../Context/ShopContext/ShopContext';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { BsArrowRepeat } from 'react-icons/bs';
 import { IoEyeOutline } from 'react-icons/io5';
-
-import fSales1 from '../../assets/images/fSales1.png';
-import fSales2 from '../../assets/images/fSales2.png';
-import fSales3 from '../../assets/images/fSales3.png';
-import shop3 from '../../assets/images/shop3.png';
-import { details } from 'framer-motion/client';
-
-const products = [
-  {
-    id: 1,
-    img: fSales1,
-    name: 'HAVIT HV-G92 Gamepad',
-    dis: 40,
-    dPrice: 120,
-    mPrice: 160,
-    rating: 88,
-    desc: 'High quality mechanical keyboard for gamers.',
-    details:
-      'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-  },
-  {
-    id: 2,
-    img: fSales3,
-    name: 'IPS LCD Gaming Monitor',
-    dis: 35,
-    dPrice: 370,
-    mPrice: 400,
-    rating: 99,
-    desc: 'Ultra smooth IPS gaming monitor with 144Hz.',
-    details:
-      'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-  },
-  {
-    id: 3,
-    img: shop3,
-    name: 'RGB Liquid CPU Cooler',
-    dis: 30,
-    dPrice: 160,
-    mPrice: 170,
-    rating: 65,
-    desc: 'Advanced RGB liquid cooling solution.',
-    details:
-      'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-  },
-  {
-    id: 4,
-    img: fSales2,
-    name: 'AK-900 Wired Keyboard',
-    dis: 0,
-    dPrice: 960,
-    mPrice: 1160,
-    rating: 75,
-    desc: 'High quality mechanical keyboard for gamers.',
-    details:
-      'PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.',
-  },
-];
+import axios from 'axios';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useShop();
- const [quantity, setQuantity] = useState(2);
-  const [mainImage, setMainImage] = useState(null); // For thumbnail switching
+  const [quantity, setQuantity] = useState(1);
+  const [mainImage, setMainImage] = useState(null);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedColor, setSelectedColor] = useState('blue');
+  const [selectedSize, setSelectedSize] = useState('M');
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
-  const product = products.find(p => p.id === Number(id));
+  useEffect(() => {
+    if (!id) return;
 
-  if (!product) {
+    const fetchProduct = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `https://dummyjson.com/products/${id}`
+        );
+        console.log('Product Data:', response.data);
+        setProduct(response.data);
+
+        const relatedResponse = await axios.get(
+          `https://dummyjson.com/products/category/${response.data.category}?limit=4`
+        );
+        setRelatedProducts(
+          relatedResponse.data.products.filter(p => p.id !== response.data.id)
+        );
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError('Failed to load product details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  const currentProduct = product 
+
+  if (loading ) {
     return (
       <div className="container py-40 text-center">
-        <p className="text-2xl text-gray-600">Product not found</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#DB4444] mx-auto"></div>
+        <p className="mt-4 text-gray-600">Loading product details...</p>
       </div>
     );
   }
 
-  const currentMainImage = mainImage || product.img;
-  const thumbnails = [product.img, product.img, product.img, product.img];
+  if (error ) {
+    return (
+      <div className="container py-40 text-center">
+        <p className="text-2xl text-red-600">{error}</p>
+      </div>
+    );
+  }
 
-  const [selectedColor, setSelectedColor] = useState('blue');
-  const [selectedSize, setSelectedSize] = useState('M');
+  if (!currentProduct) {
+    return (
+      <div className="container py-40 text-center">
+        <p className="text-2xl text-gray-600">Product not found</p>
+        <Link to="/shop" className="text-[#DB4444] mt-4 inline-block">
+          Continue Shopping
+        </Link>
+      </div>
+    );
+  }
+
+  const getProductImage = () => {
+    if (product) {
+      return product.images && product.images.length > 0
+        ? product.images[0]
+        : product.thumbnail ||
+            'https://via.placeholder.com/600x600?text=No+Image';
+    } else {
+      return currentProduct.img;
+    }
+  };
+
+  const currentMainImage = mainImage || getProductImage();
+  const getThumbnails = () => {
+    if (product && product.images) {
+      return product.images.slice(0, 4);
+    } else {
+      return [
+        currentProduct.img,
+        currentProduct.img,
+        currentProduct.img,
+        currentProduct.img,
+      ];
+    }
+  };
+
+  const thumbnails = getThumbnails();
+
+  const handleAddToCart = () => {
+    const cartItem = {
+      id: currentProduct.id,
+      name: currentProduct.title || currentProduct.name,
+      price: currentProduct.price || currentProduct.dPrice,
+      image: getProductImage(),
+      quantity: quantity,
+      color: selectedColor,
+      size: selectedSize,
+    };
+    addToCart(cartItem);
+  };
 
   return (
     <section className="pb-[140px]">
@@ -99,15 +132,9 @@ const ProductDetails = () => {
             Shop
           </Link>
           <span className="mx-2">/</span>
-          <Link to="/account" className="hover:text-black transition">
-            Account
-          </Link>
-          <span className="mx-2">/</span>
-          <Link to="/gaming" className="hover:text-black transition">
-            Gaming
-          </Link>
-          <span className="mx-2">/</span>
-          <span className="text-black font-medium">{product.name}</span>
+          <span className="text-black font-medium">
+            {currentProduct.title || currentProduct.name}
+          </span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-[70px]">
@@ -125,8 +152,15 @@ const ProductDetails = () => {
                 >
                   <img
                     src={thumb}
-                    alt={`Havic HV G-92 Gamepad thumbnail ${index + 1}`}
-                    className="w-20 h-20 object-contain mx-auto"
+                    alt={`${
+                      currentProduct.title || currentProduct.name
+                    } thumbnail ${index + 1}`}
+                    className="w-21 h-22 object-contain mx-auto"
+                    onError={e => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        'https://via.placeholder.com/80x80?text=No+Image';
+                    }}
                   />
                 </div>
               ))}
@@ -136,27 +170,38 @@ const ProductDetails = () => {
             <div className="flex-1 bg-[#F5F5F5] rounded-sm flex items-center justify-center p-10">
               <img
                 src={currentMainImage}
-                alt={product.name}
+                alt={currentProduct.title || currentProduct.name}
                 className="max-w-full max-h-[500px] object-contain"
+                onError={e => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    'https://via.placeholder.com/600x600?text=No+Image';
+                }}
               />
             </div>
           </div>
 
-          {/* Product Details - Right Side */}
           <div className="lg:col-span-5 flex flex-col justify-start">
             <h1 className="font-inter font-semibold text-2xl leading-6 tracking-[3%] mb-3">
-              {product.name}
+              {currentProduct.title || currentProduct.name}
             </h1>
 
             {/* Rating */}
             <div className="flex items-center gap-3 mb-3">
               <div className="flex text-[#FFAD33]">
                 {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} className="w-5 h-5" />
+                  <FaStar
+                    key={i}
+                    className={`w-5 h-5 ${
+                      i < Math.floor(currentProduct.rating || 4)
+                        ? 'text-[#FFAD33]'
+                        : 'text-gray-300'
+                    }`}
+                  />
                 ))}
               </div>
               <span className="text-black/50 font-poppins font-normal leading-[21px] text-sm">
-                ({product.rating} Reviews)
+                ({currentProduct.rating || 0} Reviews)
               </span>
               <span className="text-[#00FF66] text-sm font-poppins font-normal leading-[21px]">
                 | In Stock
@@ -166,19 +211,30 @@ const ProductDetails = () => {
             {/* Price */}
             <div className="mb-4">
               <span className="text-2xl font-inter font-normal leading-6 text-black">
-                ${product.dPrice}
+                ${product ? currentProduct.price : currentProduct.dPrice}
               </span>
-              {product.mPrice > product.dPrice && (
+              {product && currentProduct.discountPercentage && (
                 <del className="text-gray-500 ml-3 text-xl">
-                  ${product.mPrice}
+                  $
+                  {(
+                    currentProduct.price /
+                    (1 - currentProduct.discountPercentage / 100)
+                  ).toFixed(2)}
+                </del>
+              )}
+              {!product && currentProduct.mPrice > currentProduct.dPrice && (
+                <del className="text-gray-500 ml-3 text-xl">
+                  ${currentProduct.mPrice}
                 </del>
               )}
             </div>
 
             {/* Description */}
             <p className="text-black font-poppins font-normal mb-2 border-b pb-2">
-              {product.details}
+              {product ? currentProduct.description : currentProduct.details}
             </p>
+
+            {/* Colors */}
             <div className="flex items-center gap-6 mb-4">
               <p className="text-black font-inter text-xl leading-5 font-normal">
                 Colours:
@@ -187,13 +243,13 @@ const ProductDetails = () => {
                 <button
                   onClick={() => setSelectedColor('blue')}
                   className={`w-5 h-5 rounded-full border-3 transition ${
-                    selectedColor === 'blue' ? 'border-black ' : 'border-none'
+                    selectedColor === 'blue' ? 'border-black' : 'border-none'
                   } bg-[#A0BCE0]`}
                 />
                 <button
                   onClick={() => setSelectedColor('red')}
                   className={`w-5 h-5 rounded-full border-3 transition ${
-                    selectedColor === 'red' ? 'border-black ' : 'border-none'
+                    selectedColor === 'red' ? 'border-black' : 'border-none'
                   } bg-[#E07575]`}
                 />
               </div>
@@ -212,7 +268,7 @@ const ProductDetails = () => {
                     className={`px-4 py-2 rounded-sm border text-sm font-poppins font-medium transition ${
                       selectedSize === size
                         ? 'bg-[#DB4444] text-white border-[#DB4444]'
-                        : 'bg-white text-black border-black/50 hover:border-black/50'
+                        : 'bg-white text-black border-black/50 hover:border-black'
                     }`}
                   >
                     {size}
@@ -221,8 +277,8 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            {/* Quantity Selector */}
-            <div className="flex items-center gap-6">
+            {/* Quantity Selector & Buttons */}
+            <div className="flex items-center gap-6 mb-8">
               <div className="flex items-center rounded-sm">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -241,16 +297,20 @@ const ProductDetails = () => {
                 </button>
               </div>
 
-              <button className="bg-[#DB4444] font-poppins text-base text-white px-12 py-2.5 rounded-md font-medium hover:bg-[#db4444]/90 transition">
-                Buy Now
+              <button
+                onClick={handleAddToCart}
+                className="bg-[#DB4444] font-poppins text-sm text-white px-12 py-2.5 rounded-sm font-medium hover:bg-[#db4444]/90 transition"
+              >
+                Add to Cart
               </button>
 
               <button className="border border-black/50 p-2 rounded-sm hover:bg-[#DB4444] hover:border-[#DB4444] transition hover:text-white">
-                <FaRegHeart className="w-6 h-6" />
+                <FaRegHeart className="w-5 h-5" />
               </button>
             </div>
-            {/* Delivery & Return Boxes */}
-            <div className="mt-8 border border-black/50 rounded-sm divide-y divide-black/50">
+
+            {/* Delivery & Return */}
+            <div className="border border-black/50 rounded-sm divide-y divide-black/50">
               <div className="flex items-center gap-4 px-4 pt-6 pb-4">
                 <TbTruckDelivery className="w-10 h-10 text-black" />
                 <div>
@@ -276,40 +336,45 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+
+        {/* Related Products */}
         <div className="pt-[150px] pb-[70px]">
           <div className="relative after:absolute after:content-[''] after:w-5 after:h-full after:bg-[#DB4444] after:left-0 after:top-0 after:rounded-sm ps-9">
             <h4 className="text-xl font-normal font-poppins leading-10 text-[#db4444]">
-              Related Item
+              Related Items
             </h4>
           </div>
         </div>
-        <div className="relProduct">
-          <div className="col-span-9 grid grid-cols-4 gap-[30px]">
-            {products.map(item => (
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[30px]">
+          {(relatedProducts.length > 0 ? relatedProducts : localProducts)
+            .slice(0, 4)
+            .map(item => (
               <div key={item.id} className="group">
-                {/* IMAGE */}
-                <div className="bg-[#F5F5F5] py-10 relative overflow-hidden">
+                <div className="bg-[#F5F5F5] py-10 relative overflow-hidden rounded-sm">
                   <Link to={`/product/${item.id}`}>
                     <img
-                      src={item.img}
-                      alt={item.name}
-                      className="mx-auto w-40 cursor-pointer"
+                      src={item.thumbnail}
+                      alt={item.title}
+                      className="mx-auto w-40 h-40 object-contain cursor-pointer"
+                      onError={e => {
+                        e.target.onerror = null;
+                        e.target.src =
+                          'https://via.placeholder.com/160x160?text=No+Image';
+                      }}
                     />
                   </Link>
 
-                  {/* DISCOUNT */}
-                  {item.dis > 0 && (
+                  {/* Discount */}
+                  {(item.dis > 0 || item.discountPercentage) && (
                     <span className="absolute top-3 left-3 bg-[#DB4444] text-white text-xs px-2 py-1 rounded">
-                      -{item.dis}%
+                      -{item.dis || item.discountPercentage}%
                     </span>
                   )}
 
-                  {/* ICONS */}
+                  {/* Icons */}
                   <div className="absolute top-3 right-3 space-y-2 flex flex-col">
-                    <button
-                      onClick={() => addToWishlist(item)}
-                      className="bg-white p-2 rounded-full hover:text-red-500 transition"
-                    >
+                    <button className="bg-white p-2 rounded-full hover:text-red-500 transition">
                       <FaRegHeart />
                     </button>
                     <button className="bg-white p-2 rounded-full hover:text-black transition">
@@ -317,42 +382,69 @@ const ProductDetails = () => {
                     </button>
                   </div>
 
-                  {/* ADD TO CART */}
-                  <div
-                    onClick={() => addToCart(item)}
+                  {/* Add to Cart */}
+                  <button
+                    onClick={() => {
+                      const cartItem = {
+                        id: item.id,
+                        name: item.title || item.name,
+                        price: item.price || item.dPrice,
+                        image: item.thumbnail || item.img,
+                        quantity: 1,
+                      };
+                      addToCart(cartItem);
+                    }}
                     className="absolute left-0 bottom-[-45px] w-full bg-black text-white text-center py-2
-                              cursor-pointer opacity-0 group-hover:bottom-0 group-hover:opacity-100 transition-all"
+                            cursor-pointer opacity-0 group-hover:bottom-0 group-hover:opacity-100 transition-all rounded-b-sm"
                   >
                     Add To Cart
-                  </div>
+                  </button>
                 </div>
 
-                {/* DETAILS */}
+                {/* Details */}
                 <div className="pt-4">
-                  <Link to={`/product/${item.id}`} className="font-medium">
-                    {item.name}
+                  <Link
+                    to={`/product/${item.id}`}
+                    className="font-medium hover:text-[#DB4444]"
+                  >
+                    {item.title || item.name}
                   </Link>
 
                   <p className="flex gap-3 py-2">
                     <span className="text-[#DB4444] font-medium">
-                      ${item.dPrice}
+                      ${item.price || item.dPrice}
                     </span>
-                    <del className="text-black/50">${item.mPrice}</del>
+                    {(item.discountPercentage || item.mPrice > item.dPrice) && (
+                      <del className="text-black/50">
+                        $
+                        {item.mPrice ||
+                          (
+                            item.price /
+                            (1 - item.discountPercentage / 100)
+                          ).toFixed(2)}
+                      </del>
+                    )}
                   </p>
 
-                  {/* RATING */}
+                  {/* Rating */}
                   <div className="flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <FaStar key={i} className="text-[#FFAD33]" />
+                      <FaStar
+                        key={i}
+                        className={`${
+                          i < Math.floor(item.rating || 4)
+                            ? 'text-[#FFAD33]'
+                            : 'text-gray-300'
+                        }`}
+                      />
                     ))}
                     <span className="text-sm text-black/50">
-                      ({item.rating})
+                      ({item.rating || 0})
                     </span>
                   </div>
                 </div>
               </div>
             ))}
-          </div>
         </div>
       </div>
     </section>

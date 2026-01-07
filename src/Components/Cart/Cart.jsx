@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { useShop } from '../../Context/ShopContext/ShopContext';
 import {
   MdOutlineKeyboardArrowUp,
   MdOutlineKeyboardArrowDown,
 } from 'react-icons/md';
+import { IoMdCloseCircle } from 'react-icons/io';
 
 const Cart = () => {
-  const { cart, incrementQuantity, decrementQuantity } = useShop();
+  const { cart, incrementQuantity, decrementQuantity, removeFromCart } =
+    useShop();
   const shippingCost = 0;
 
   const subtotal = cart.reduce(
@@ -55,8 +57,12 @@ const Cart = () => {
               key={item.id}
               className="flex justify-between items-center shadow-sm py-4 px-10 select-none mb-10 rounded-sm"
             >
-              <div className="w-1/4 flex items-center gap-4">
+              <div className="w-1/4 flex items-center gap-4 relative">
                 <img src={item.img} alt={item.name} className="w-16" />
+                <IoMdCloseCircle
+                  onClick={() => removeFromCart(item.id)}
+                  className="text-[#db4444] absolute top-0.5 -left-1.5"
+                />
                 <span className="text-sm font-poppins font-normal leading-6 text-black">
                   {item.name}
                 </span>
@@ -139,7 +145,10 @@ const Cart = () => {
                     ${total}
                   </span>
                 </div>
-                <Link to='/checkout' className="px-12 py-4 bg-[#DB4444] text-[#fafafa] font-poppins font-medium text-base leading-6 rounded-sm mx-auto block">
+                <Link
+                  to="/checkout"
+                  className="px-12 py-4 bg-[#DB4444] text-[#fafafa] font-poppins font-medium text-base leading-6 rounded-sm mx-auto block"
+                >
                   Procees to checkout
                 </Link>
               </div>

@@ -4,7 +4,6 @@ const ShopContext = createContext();
 
 export const ShopProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
-    // Load cart from localStorage on first render
     const storedCart = localStorage.getItem('cart');
     return storedCart ? JSON.parse(storedCart) : [];
   });
@@ -14,7 +13,7 @@ export const ShopProvider = ({ children }) => {
     return storedWishlist ? JSON.parse(storedWishlist) : [];
   });
 
-  // Persist cart & wishlist
+  // Persist to localStorage
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
@@ -58,6 +57,11 @@ export const ShopProvider = ({ children }) => {
     );
   };
 
+  
+  const removeFromCart = id => {
+    setCart(prevCart => prevCart.filter(item => item.id !== id));
+  };
+
   // ADD TO WISHLIST
   const addToWishlist = product => {
     setWishlist(prev => {
@@ -65,6 +69,10 @@ export const ShopProvider = ({ children }) => {
       if (exists) return prev;
       return [...prev, product];
     });
+  };
+
+  const removeFromWishlist = id => {
+    setWishlist(prev => prev.filter(item => item.id !== id));
   };
 
   return (
@@ -76,6 +84,8 @@ export const ShopProvider = ({ children }) => {
         addToWishlist,
         incrementQuantity,
         decrementQuantity,
+        removeFromCart, 
+        removeFromWishlist, 
       }}
     >
       {children}
@@ -83,4 +93,10 @@ export const ShopProvider = ({ children }) => {
   );
 };
 
-export const useShop = () => useContext(ShopContext);
+export const useShop = () => {
+  const context = useContext(ShopContext);
+  if (!context) {
+    throw new Error('useShop must be used within a ShopProvider');
+  }
+  return context;
+};
